@@ -13,9 +13,16 @@ import com.example.appfichaje.modelos.SolicitudFichaje;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 
 public class MainViewModel extends AndroidViewModel {
     private FusedLocationProviderClient clienteUbicacion;
@@ -27,7 +34,7 @@ public class MainViewModel extends AndroidViewModel {
         clienteUbicacion = LocationServices.getFusedLocationProviderClient(application);
     }
 
-    @SuppressLint("MissingPermission") // Se verifica en la Activity antes de llamar
+    @SuppressLint("MissingPermission")
     public void realizarFichaje(boolean esEntrada) {
         procesando.setValue(true);
         mensajeEstado.setValue("Obteniendo ubicación GPS...");
@@ -60,9 +67,12 @@ public class MainViewModel extends AndroidViewModel {
             public void onResponse(Call<RespuestaApi> call, Response<RespuestaApi> response) {
                 procesando.setValue(false);
                 if (response.isSuccessful() && response.body() != null) {
-                    mensajeEstado.setValue(response.body().getMessage() + "\nHora: " + response.body().getHora());
+                    // AQUÍ ESTÁ EL CAMBIO: Convertimos la hora antes de mostrarla
+                    String horaServer = response.body().getHora();
+                    String horaLocal = convertirHoraUTCaLocal(horaServer);
+
+                    mensajeEstado.setValue(response.body().getMessage() + "\nHora: " + horaLocal);
                 } else {
-                    // Intentamos leer el mensaje de error del JSON que devuelve Flask (ej: fuera de radio)
                     try {
                         String errorJson = response.errorBody().string();
                         JSONObject json = new JSONObject(errorJson);
@@ -80,5 +90,29 @@ public class MainViewModel extends AndroidViewModel {
                 mensajeEstado.setValue("Error de red: " + t.getMessage());
             }
         });
+    }
+
+    // Función auxiliar para sumar 1 hora (UTC a UTC+1)
+    private String convertirHoraUTCaLocal(String horaOriginal) {
+        try {
+            // El servidor suele enviar formato con milisegundos: "14:30:00.123456"
+            // Cortamos para quedarnos solo con HH:mm:ss
+            if (horaOriginal != null && horaOriginal.length() > 8) {
+                horaOriginal = horaOriginal.substring(0, 8);
+            }
+
+            SimpleDateFormat formatoEntrada = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+            formatoEntrada.setTimeZone(TimeZone.getTimeZone("UTC")); // Le decimos que lo que entra es UTC
+
+            Date fecha = formatoEntrada.parse(horaOriginal);
+
+            SimpleDateFormat formatoSalida = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+            // Aquí ponemos "GMT+1" o "Europe/Madrid"
+            formatoSalida.setTimeZone(TimeZone.getTimeZone("GMT+1"));
+
+            return formatoSalida.format(fecha);
+        } catch (Exception e) {
+            return horaOriginal; // Si falla algo, devolvemos la hora tal cual vino
+        }
     }
 }
