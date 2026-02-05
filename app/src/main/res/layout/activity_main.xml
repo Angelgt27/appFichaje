@@ -12,7 +12,7 @@
         android:text="Control de Presencia"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:layout_marginBottom="40dp"/>
+        android:layout_marginBottom="20dp"/>
 
     <Button
         android:id="@+id/btnEntrada"
@@ -39,6 +39,14 @@
         android:gravity="center"
         android:layout_marginTop="30dp"
         android:textSize="16sp"/>
+
+    <Button
+        android:id="@+id/btnCerrarSesion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cerrar Sesión"
+        android:backgroundTint="#607D8B"
+        android:layout_marginBottom="20dp"/>
 
     <ProgressBar
         android:id="@+id/progressBarMain"
