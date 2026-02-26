@@ -43,16 +43,13 @@ public class ResumenActivity extends AppCompatActivity {
         layoutDatos = findViewById(R.id.layoutDatos);
 
         viewModel = new ViewModelProvider(this).get(ResumenViewModel.class);
-        calendarioActual = Calendar.getInstance(); // Mes y año actual
+        calendarioActual = Calendar.getInstance();
 
-        // Volver atrás
         btnVolver.setOnClickListener(v -> finish());
 
-        // Cambiar mes
         btnAnterior.setOnClickListener(v -> cambiarMes(-1));
         btnSiguiente.setOnClickListener(v -> cambiarMes(1));
 
-        // Observadores
         viewModel.cargando.observe(this, cargando -> {
             progressBar.setVisibility(cargando ? View.VISIBLE : View.GONE);
             layoutDatos.setVisibility(cargando ? View.INVISIBLE : View.VISIBLE);
@@ -83,9 +80,8 @@ public class ResumenActivity extends AppCompatActivity {
 
     private void actualizarPeticion() {
         int year = calendarioActual.get(Calendar.YEAR);
-        int month = calendarioActual.get(Calendar.MONTH) + 1; // Calendar va de 0 a 11
+        int month = calendarioActual.get(Calendar.MONTH) + 1;
 
-        // Formatear a YYYY-MM para la API
         String mesFormat = String.format(Locale.getDefault(), "%04d-%02d", year, month);
         tvMesActual.setText(mesFormat);
 

@@ -35,12 +35,11 @@ public class LoginActivity extends AppCompatActivity {
         EditText etEmail = findViewById(R.id.etEmail);
         EditText etPassword = findViewById(R.id.etPassword);
         Button btnLogin = findViewById(R.id.btnLogin);
-        TextView tvRecuperarPass = findViewById(R.id.tvRecuperarPass); // NUEVA REFERENCIA
+        TextView tvRecuperarPass = findViewById(R.id.tvRecuperarPass);
         progressBar = findViewById(R.id.progressBar);
 
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
-        // Observar resultado de Login
         loginViewModel.getResultadoLogin().observe(this, resultado -> {
             if ("EXITO".equals(resultado)) {
                 irAMain();
@@ -49,19 +48,16 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // NUEVO: Observar resultado de Recuperación
         loginViewModel.getMensajeRecuperacion().observe(this, mensaje -> {
             Toast.makeText(this, mensaje, Toast.LENGTH_LONG).show();
         });
 
-        // Observar estado de carga (ProgressBar)
         loginViewModel.getCargando().observe(this, cargando -> {
             progressBar.setVisibility(cargando ? View.VISIBLE : View.GONE);
             btnLogin.setEnabled(!cargando);
             tvRecuperarPass.setEnabled(!cargando);
         });
 
-        // Evento Login
         btnLogin.setOnClickListener(v -> {
             String email = etEmail.getText().toString().trim();
             String pass = etPassword.getText().toString();
@@ -72,11 +68,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // NUEVO: Evento Recuperar Contraseña
         tvRecuperarPass.setOnClickListener(v -> mostrarDialogoRecuperacion());
     }
 
-    // NUEVA FUNCIÓN: Diálogo para pedir el email
     private void mostrarDialogoRecuperacion() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Recuperar Contraseña");

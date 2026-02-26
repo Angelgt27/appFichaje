@@ -21,7 +21,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.appfichaje.R;
 import com.example.appfichaje.datos.GestorSesion;
 import com.example.appfichaje.viewmodel.MainViewModel;
-import com.example.appfichaje.servicios.NotificacionWorker; // <-- NUEVO IMPORT
+import com.example.appfichaje.servicios.NotificacionWorker;
 
 import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.PeriodicWorkRequest;
@@ -31,11 +31,10 @@ import java.util.concurrent.TimeUnit;
 public class MainActivity extends AppCompatActivity {
     private MainViewModel mainViewModel;
     private static final int CODIGO_PERMISO_UBICACION = 100;
-    private static final int CODIGO_PERMISO_NOTIFICACIONES = 101; // <-- CÓDIGO PARA PERMISO
+    private static final int CODIGO_PERMISO_NOTIFICACIONES = 101;
     private TextView tvStatus;
     private ProgressBar progressBar;
 
-    // Variables para NFC
     private NfcAdapter nfcAdapter;
     private PendingIntent pendingIntent;
 
@@ -76,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Observador de Logout
         mainViewModel.logoutCompletado.observe(this, completado -> {
             if (completado) {
                 ejecutarCierreSesionLocal();
@@ -121,14 +119,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        // 2. Programar la revisión en segundo plano cada 15 minutos
         PeriodicWorkRequest peticionTrabajo = new PeriodicWorkRequest.Builder(
                 NotificacionWorker.class, 15, TimeUnit.MINUTES)
                 .build();
 
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(
                 "revisar_retrasos_fichaje",
-                ExistingPeriodicWorkPolicy.KEEP, // Mantiene la tarea si ya existe
+                ExistingPeriodicWorkPolicy.KEEP,
                 peticionTrabajo
         );
     }
@@ -212,7 +209,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void ejecutarCierreSesionLocal() {
-        // --- CANCELAR TAREAS EN SEGUNDO PLANO ---
         WorkManager.getInstance(this).cancelAllWork();
 
         GestorSesion sesion = new GestorSesion(this);

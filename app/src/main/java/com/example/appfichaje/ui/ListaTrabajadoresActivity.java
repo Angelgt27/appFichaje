@@ -27,7 +27,6 @@ public class ListaTrabajadoresActivity extends AppCompatActivity {
         RecyclerView rv = findViewById(R.id.rvTrabajadores);
         rv.setLayoutManager(new LinearLayoutManager(this));
 
-        // Al tocar un empleado, enviamos su ID y su Nombre a la siguiente pantalla
         adapter = new TrabajadoresAdapter(trabajador -> {
             Intent intent = new Intent(this, HistorialActivity.class);
             intent.putExtra("EMPLEADO_ID", String.valueOf(trabajador.getId()));

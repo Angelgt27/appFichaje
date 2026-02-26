@@ -28,7 +28,6 @@ public class MainViewModel extends AndroidViewModel {
     public MutableLiveData<Boolean> procesando = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> sesionCaducada = new MutableLiveData<>(false);
 
-    // NUEVAS VARIABLES para NFC y Logout
     public MutableLiveData<Boolean> estaDentro = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> logoutCompletado = new MutableLiveData<>(false);
 
@@ -48,9 +47,8 @@ public class MainViewModel extends AndroidViewModel {
 
                 if (response.isSuccessful() && response.body() != null) {
                     String estado = response.body().getEstado().toUpperCase();
-                    String ultimaMarca = convertirHoraUTCaLocal(response.body().getUltimaMarca());
+                    String ultimaMarca = response.body().getUltimaMarca();
 
-                    // Guardamos el estado para que el NFC sepa qué hacer
                     estaDentro.setValue("DENTRO".equalsIgnoreCase(estado));
 
                     mensajeEstado.setValue("Estado actual: " + estado + "\nÚltima marca: " + ultimaMarca);
@@ -73,8 +71,6 @@ public class MainViewModel extends AndroidViewModel {
     public void realizarFichaje(boolean esEntrada) {
         procesando.setValue(true);
         mensajeEstado.setValue("Obteniendo ubicación GPS precisa...");
-
-        // MEJORA: Obtiene la ubicación actual real, no la última guardada en caché
         clienteUbicacion.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null)
                 .addOnSuccessListener(ubicacion -> {
                     if (ubicacion != null) {
@@ -101,9 +97,9 @@ public class MainViewModel extends AndroidViewModel {
                 procesando.setValue(false);
 
                 if (response.isSuccessful() && response.body() != null) {
-                    String horaLocal = convertirHoraUTCaLocal(response.body().getHora());
+                    String horaLocal = response.body().getHora();
                     mensajeEstado.setValue(response.body().getMessage() + "\nHora: " + horaLocal);
-                    estaDentro.setValue(esEntrada); // Actualizar estado local tras fichar
+                    estaDentro.setValue(esEntrada);
                 } else {
                     if (response.code() == 401) {
                         sesionCaducada.setValue(true);
@@ -141,26 +137,11 @@ public class MainViewModel extends AndroidViewModel {
             @Override
             public void onFailure(Call<RespuestaApi> call, Throwable t) {
                 procesando.setValue(false);
-                logoutCompletado.setValue(true); // Cerrar localmente aunque falle la red
+                logoutCompletado.setValue(true);
             }
         });
     }
 
-    private String convertirHoraUTCaLocal(String horaOriginal) {
-        if (horaOriginal == null || horaOriginal.equals("N/A")) return "Ninguna";
-        try {
-            if (horaOriginal.length() > 8) horaOriginal = horaOriginal.substring(0, 8);
-            SimpleDateFormat formatoEntrada = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-            formatoEntrada.setTimeZone(TimeZone.getTimeZone("UTC"));
-            Date fecha = formatoEntrada.parse(horaOriginal);
 
-            SimpleDateFormat formatoSalida = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-            // MEJORA: Zona horaria dinámica del dispositivo
-            formatoSalida.setTimeZone(TimeZone.getDefault());
-            return formatoSalida.format(fecha);
-        } catch (Exception e) {
-            return horaOriginal;
-        }
-    }
 
 }

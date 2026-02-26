@@ -31,7 +31,6 @@ public class TrabajadoresAdapter extends RecyclerView.Adapter<TrabajadoresAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // CAMBIO AQUÍ: Inflamos nuestro nuevo layout de tarjeta
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_trabajador, parent, false);
         return new ViewHolder(view);
     }
@@ -50,7 +49,6 @@ public class TrabajadoresAdapter extends RecyclerView.Adapter<TrabajadoresAdapte
         TextView tvNombre;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            // CAMBIO AQUÍ: Enlazamos con el ID correcto de item_trabajador.xml
             tvNombre = itemView.findViewById(R.id.tvNombreItem);
         }
     }

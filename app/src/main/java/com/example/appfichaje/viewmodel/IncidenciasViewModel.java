@@ -57,7 +57,7 @@ public class IncidenciasViewModel extends AndroidViewModel {
                 cargando.setValue(false);
                 if (response.isSuccessful() && response.body() != null) {
                     mensajeToast.setValue("Incidencia registrada con éxito");
-                    cargarIncidencias(); // Recargamos la lista para ver la nueva
+                    cargarIncidencias();
                 } else {
                     mensajeToast.setValue("Error al registrar incidencia");
                 }

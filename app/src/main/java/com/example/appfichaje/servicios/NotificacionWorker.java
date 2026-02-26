@@ -34,7 +34,6 @@ public class NotificacionWorker extends Worker {
     public Result doWork() {
         ServicioApi api = ClienteApi.obtenerCliente(getApplicationContext());
         try {
-            // Llamada síncrona (execute) en vez de asíncrona (enqueue) porque estamos en un Worker en segundo plano
             Response<RespuestaNotificacion> response = api.comprobarNotificacionPendiente().execute();
 
             if (response.isSuccessful() && response.body() != null) {
@@ -42,11 +41,9 @@ public class NotificacionWorker extends Worker {
                     mostrarNotificacionLocal(response.body().getTitulo(), response.body().getMensaje());
                 }
             } else if (response.code() == 401) {
-                // Si el token ha caducado, no reintentamos
                 return Result.failure();
             }
         } catch (Exception e) {
-            // Si no hay internet, reintentará más tarde
             return Result.retry();
         }
         return Result.success();

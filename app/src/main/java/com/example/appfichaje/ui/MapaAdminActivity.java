@@ -68,11 +68,10 @@ public class MapaAdminActivity extends AppCompatActivity {
         desbloquearControles(false);
         cargarDatosEmpresa();
 
-        // 1. EVENTO DE LA BARRA (Arrastrar)
         seekBarRadio.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (fromUser) { // Solo si lo mueve el usuario, para no hacer bucle infinito
+                if (fromUser) {
                     sincronizarRadio(progress, false, true);
                 }
             }
@@ -80,18 +79,16 @@ public class MapaAdminActivity extends AppCompatActivity {
             @Override public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
-        // 2. EVENTO DEL TECLADO (Escribir números)
         etRadioActual.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
-                if (etRadioActual.hasFocus() && s.length() > 0) { // Solo si estamos escribiendo
+                if (etRadioActual.hasFocus() && s.length() > 0) {
                     try {
                         int valorTecleado = Integer.parseInt(s.toString());
                         sincronizarRadio(valorTecleado, true, false);
                     } catch (NumberFormatException e) {
-                        // Ignorar si borran todo temporalmente
                     }
                 }
             }
@@ -100,13 +97,10 @@ public class MapaAdminActivity extends AppCompatActivity {
         btnMenos.setOnClickListener(v -> sincronizarRadio(radioActual - 5, true, true));
         btnMas.setOnClickListener(v -> sincronizarRadio(radioActual + 5, true, true));
 
-        // 4. EVENTO GUARDAR
         btnGuardar.setOnClickListener(v -> guardarNuevoRadio());
     }
 
-    // --- FUNCIÓN CENTRAL DE SINCRONIZACIÓN ---
     private void sincronizarRadio(int nuevoValor, boolean actualizarBarra, boolean actualizarTexto) {
-        // Establecemos límites lógicos (entre 10 y 1000 metros)
         if (nuevoValor < 10) nuevoValor = 10;
         if (nuevoValor > 1000) nuevoValor = 1000;
 
@@ -117,7 +111,7 @@ public class MapaAdminActivity extends AppCompatActivity {
         }
         if (actualizarTexto) {
             etRadioActual.setText(String.valueOf(radioActual));
-            etRadioActual.setSelection(etRadioActual.getText().length()); // Mantiene el cursor al final
+            etRadioActual.setSelection(etRadioActual.getText().length());
         }
 
         dibujarCirculo();
@@ -154,7 +148,6 @@ public class MapaAdminActivity extends AppCompatActivity {
                     marcador.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
                     map.getOverlays().add(marcador);
 
-                    // Inicializamos todo con el valor real
                     desbloquearControles(true);
                     sincronizarRadio(empresa.getRadio(), true, true);
 
