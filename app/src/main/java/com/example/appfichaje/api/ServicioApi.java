@@ -1,6 +1,7 @@
 package com.example.appfichaje.api;
 
 import com.example.appfichaje.modelos.EmpresaAdmin;
+import com.example.appfichaje.modelos.FichajeHistorial;
 import com.example.appfichaje.modelos.Incidencia;
 import com.example.appfichaje.modelos.RespuestaApi;
 import com.example.appfichaje.modelos.RespuestaEstado;
@@ -10,6 +11,7 @@ import com.example.appfichaje.modelos.ResumenMensual;
 import com.example.appfichaje.modelos.SolicitudFichaje;
 import com.example.appfichaje.modelos.SolicitudLogin;
 import com.example.appfichaje.modelos.SolicitudRecuperar;
+import com.example.appfichaje.modelos.TrabajadorItem;
 
 import java.util.List;
 import java.util.Map;
@@ -57,4 +59,10 @@ public interface ServicioApi {
 
     @PUT("api/admin/empresa")
     Call<RespuestaApi> actualizarRadioEmpresa(@Body Map<String, String> body);
+
+    @GET("api/admin/trabajadores")
+    Call<List<TrabajadorItem>> obtenerTrabajadoresAdmin();
+
+    @GET("api/presencia/historial")
+    Call<List<FichajeHistorial>> obtenerHistorialFichajes(@Query("empleado_id") String empleadoId);
 }

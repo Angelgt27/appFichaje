@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnIncidencias = findViewById(R.id.btnIncidencias);
         Button btnResumen = findViewById(R.id.btnResumen);
         Button btnAdminMapa = findViewById(R.id.btnAdminMapa);
+        Button btnAdminTrabajadores = findViewById(R.id.btnAdminTrabajadores);
 
         tvStatus = findViewById(R.id.tvStatus);
         progressBar = findViewById(R.id.progressBarMain);
@@ -97,9 +98,15 @@ public class MainActivity extends AppCompatActivity {
 
         if ("Administrador".equalsIgnoreCase(rolUsuario.trim())) {
             btnAdminMapa.setVisibility(View.VISIBLE);
+            btnAdminTrabajadores.setVisibility(View.VISIBLE);
 
             btnAdminMapa.setOnClickListener(v -> {
                 Intent intent = new Intent(MainActivity.this, MapaAdminActivity.class);
+                startActivity(intent);
+            });
+
+            btnAdminTrabajadores.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, ListaTrabajadoresActivity.class);
                 startActivity(intent);
             });
         } else {

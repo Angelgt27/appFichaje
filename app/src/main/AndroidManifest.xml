@@ -22,6 +22,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppFichaje">
         <activity
+            android:name=".ui.HistorialActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.ListaTrabajadoresActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.MapaAdminActivity"
             android:exported="false" />
         <activity
