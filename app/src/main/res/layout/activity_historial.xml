@@ -3,20 +3,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:paddingTop="32dp">
+    android:fitsSystemWindows="true"
+    android:background="#FFFFFF"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp"
+    android:paddingBottom="16dp">
 
     <TextView
         android:id="@+id/tvNombreEmpleado"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Historial de Fichajes"
-        android:textSize="20sp"
+        android:textSize="22sp"
         android:textStyle="bold"
-        android:layout_marginBottom="16dp"/>
+        android:gravity="center"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="24dp"
+        android:textColor="#333333"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvHistorial"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="16dp"/>
 </LinearLayout>

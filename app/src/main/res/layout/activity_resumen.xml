@@ -3,31 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="#F9F9F9">
+    android:fitsSystemWindows="true"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp"
+    android:background="#FFFFFF"> <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="24dp"
+    android:layout_marginBottom="24dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ImageButton
+        android:id="@+id/btnVolver"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:src="?attr/homeAsUpIndicator"
+        android:background="?attr/selectableItemBackgroundBorderless" />
+
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="24dp">
-
-        <ImageButton
-            android:id="@+id/btnVolver"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="?attr/homeAsUpIndicator"
-            android:background="?attr/selectableItemBackgroundBorderless" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Resumen Mensual"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:layout_marginStart="8dp"/>
-    </LinearLayout>
+        android:layout_centerInParent="true"
+        android:text="Resumen Mensual"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#333333"/>
+</RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,23 +43,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="&lt;"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:backgroundTint="#757575"/>
 
         <TextView
             android:id="@+id/tvMesActual"
-            android:layout_width="150dp"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:text="2026-02"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:textColor="#000000"/>
 
         <Button
             android:id="@+id/btnMesSiguiente"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="&gt;"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:backgroundTint="#757575"/>
     </LinearLayout>
 
     <ProgressBar
@@ -71,13 +76,16 @@
         android:id="@+id/layoutDatos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Horas Teóricas del Mes:"
-            android:textSize="16sp"/>
+            android:text="Horas Teóricas del Mes"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="#666666"/>
         <TextView
             android:id="@+id/tvHorasEsperadas"
             android:layout_width="match_parent"
@@ -85,14 +93,17 @@
             android:text="0.0 h"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="#757575"
-            android:layout_marginBottom="16dp"/>
+            android:textColor="#333333"
+            android:gravity="center"
+            android:layout_marginBottom="24dp"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Horas Trabajadas Reales:"
-            android:textSize="16sp"/>
+            android:text="Horas Trabajadas Reales"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="#666666"/>
         <TextView
             android:id="@+id/tvHorasTrabajadas"
             android:layout_width="match_parent"
@@ -100,21 +111,31 @@
             android:text="0.0 h"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="#757575"
-            android:layout_marginBottom="16dp"/>
+            android:textColor="#333333"
+            android:gravity="center"
+            android:layout_marginBottom="24dp"/>
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="2dp"
+            android:background="#DDDDDD"
+            android:layout_marginBottom="24dp"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Horas Extra:"
-            android:textSize="16sp"/>
+            android:text="Horas Extra"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:textColor="#666666"/>
         <TextView
             android:id="@+id/tvHorasExtra"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="0.0 h"
-            android:textSize="28sp"
+            android:textSize="32sp"
             android:textStyle="bold"
-            android:textColor="#4CAF50"/>
+            android:textColor="#4CAF50"
+            android:gravity="center"/>
     </LinearLayout>
 </LinearLayout>
