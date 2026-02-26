@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#F9F9F9">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="24dp">
+
+        <ImageButton
+            android:id="@+id/btnVolver"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="?attr/homeAsUpIndicator"
+            android:background="?attr/selectableItemBackgroundBorderless" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Resumen Mensual"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="32dp">
+
+        <Button
+            android:id="@+id/btnMesAnterior"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="&lt;"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/tvMesActual"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="2026-02"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+        <Button
+            android:id="@+id/btnMesSiguiente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="&gt;"
+            android:textSize="20sp"/>
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBarResumen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/layoutDatos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Horas Teóricas del Mes:"
+            android:textSize="16sp"/>
+        <TextView
+            android:id="@+id/tvHorasEsperadas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0.0 h"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#757575"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Horas Trabajadas Reales:"
+            android:textSize="16sp"/>
+        <TextView
+            android:id="@+id/tvHorasTrabajadas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0.0 h"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#757575"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Horas Extra:"
+            android:textSize="16sp"/>
+        <TextView
+            android:id="@+id/tvHorasExtra"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0.0 h"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#4CAF50"/>
+    </LinearLayout>
+</LinearLayout>

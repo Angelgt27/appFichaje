@@ -31,6 +31,7 @@
         android:layout_marginTop="20dp"
         android:textSize="18sp"/>
 
+
     <TextView
         android:id="@+id/tvStatus"
         android:layout_width="match_parent"
@@ -41,11 +42,41 @@
         android:textSize="16sp"/>
 
     <Button
+        android:id="@+id/btnIncidencias"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MIS INCIDENCIAS"
+        android:backgroundTint="#FF9800"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"/>
+
+    <Button
+        android:id="@+id/btnResumen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="RESUMEN HORARIO MENSUAL"
+        android:backgroundTint="#FF9800"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"/>
+
+    <Button
+        android:id="@+id/btnAdminMapa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MAPA EMPRESA"
+        android:backgroundTint="#9C27B0"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        android:textSize="16sp"/>
+
+    <Button
         android:id="@+id/btnCerrarSesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cerrar Sesión"
         android:backgroundTint="#607D8B"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"/>
 
     <ProgressBar

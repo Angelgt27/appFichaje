@@ -47,13 +47,17 @@ public class MainActivity extends AppCompatActivity {
         Button btnEntrada = findViewById(R.id.btnEntrada);
         Button btnSalida = findViewById(R.id.btnSalida);
         Button btnCerrarSesion = findViewById(R.id.btnCerrarSesion);
+        Button btnIncidencias = findViewById(R.id.btnIncidencias);
+        Button btnResumen = findViewById(R.id.btnResumen);
+        Button btnAdminMapa = findViewById(R.id.btnAdminMapa);
 
         tvStatus = findViewById(R.id.tvStatus);
         progressBar = findViewById(R.id.progressBarMain);
+        GestorSesion sesion = new GestorSesion(this);
+        String rolUsuario = sesion.obtenerRol();
 
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
-        // Observadores
         mainViewModel.mensajeEstado.observe(this, mensaje -> {
             tvStatus.setText(mensaje);
         });
@@ -67,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
 
         mainViewModel.sesionCaducada.observe(this, caducada -> {
             if (caducada) {
-                Toast.makeText(this, "Sesión caducada. Por favor, ingresa de nuevo.", Toast.LENGTH_LONG).show();
                 ejecutarCierreSesionLocal();
             }
         });
@@ -81,16 +84,30 @@ public class MainActivity extends AppCompatActivity {
 
         btnEntrada.setOnClickListener(v -> verificarPermisosYFichar(true));
         btnSalida.setOnClickListener(v -> verificarPermisosYFichar(false));
+        btnIncidencias.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, IncidenciasActivity.class);
+            startActivity(intent);
+        });
+        btnResumen.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, ResumenActivity.class));
+        });
         if (btnCerrarSesion != null) {
             btnCerrarSesion.setOnClickListener(v -> mainViewModel.cerrarSesionApi());
         }
 
+        if ("Administrador".equalsIgnoreCase(rolUsuario.trim())) {
+            btnAdminMapa.setVisibility(View.VISIBLE);
+
+            btnAdminMapa.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, MapaAdminActivity.class);
+                startActivity(intent);
+            });
+        } else {
+            btnAdminMapa.setVisibility(View.GONE);
+        }
+
         inicializarNFC();
         mainViewModel.comprobarEstadoSesion();
-
-        // --- INICIO DE CONFIGURACIÓN WORKMANAGER Y NOTIFICACIONES ---
-
-        // 1. Pedir permisos de notificaciones en Android 13+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, CODIGO_PERMISO_NOTIFICACIONES);
@@ -107,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
                 ExistingPeriodicWorkPolicy.KEEP, // Mantiene la tarea si ya existe
                 peticionTrabajo
         );
-        // --- FIN DE CONFIGURACIÓN WORKMANAGER ---
     }
 
     private void inicializarNFC() {

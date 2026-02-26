@@ -19,7 +19,6 @@ public class LoginViewModel extends AndroidViewModel {
     private MutableLiveData<String> resultadoLogin = new MutableLiveData<>();
     private MutableLiveData<Boolean> cargando = new MutableLiveData<>(false);
 
-    // NUEVO: LiveData para el resultado de recuperar contraseña
     private MutableLiveData<String> mensajeRecuperacion = new MutableLiveData<>();
 
     private GestorSesion gestorSesion;
@@ -44,6 +43,7 @@ public class LoginViewModel extends AndroidViewModel {
                         cargando.setValue(false);
                         if (response.isSuccessful() && response.body() != null) {
                             gestorSesion.guardarToken(response.body().getAccessToken());
+                            gestorSesion.guardarRol(response.body().getRol());
                             resultadoLogin.setValue("EXITO");
                         } else {
                             resultadoLogin.setValue("Error: Credenciales incorrectas");
@@ -58,7 +58,6 @@ public class LoginViewModel extends AndroidViewModel {
                 });
     }
 
-    // NUEVA FUNCIÓN: Solicitar correo de recuperación
     public void solicitarRecuperacion(String email) {
         cargando.setValue(true);
         SolicitudRecuperar solicitud = new SolicitudRecuperar(email);
@@ -69,7 +68,6 @@ public class LoginViewModel extends AndroidViewModel {
                     public void onResponse(Call<RespuestaApi> call, Response<RespuestaApi> response) {
                         cargando.setValue(false);
                         if (response.isSuccessful() && response.body() != null) {
-                            // El backend devuelve "message": "Si el email existe en nuestro sistema..."
                             mensajeRecuperacion.setValue(response.body().getMessage());
                         } else {
                             try {

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_margin="8dp"
+    android:background="#F5F5F5"
+    android:elevation="2dp">
+
+    <TextView
+        android:id="@+id/tvFechaHora"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2024-05-12 - 14:30"
+        android:textStyle="bold"
+        android:textColor="#3F51B5"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvDescripcion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Descripción de la incidencia..."
+        android:layout_marginTop="8dp"
+        android:textSize="16sp"
+        android:textColor="#333333" />
+</LinearLayout>

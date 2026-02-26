@@ -23,4 +23,11 @@ public class GestorSesion {
     public void cerrarSesion() {
         prefs.edit().clear().apply();
     }
+
+    public void guardarRol(String rol) {
+        prefs.edit().putString("rol_usuario", rol).apply();
+    }
+    public String obtenerRol() {
+        return prefs.getString("rol_usuario", "Empleado");
+    }
 }
